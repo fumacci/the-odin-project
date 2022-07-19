@@ -10,83 +10,101 @@ function getComputerChoice() {
     return choice[randomIndex];
 }
 
+function getPlayerChoice() {
+    return prompt("Enter your choice").toLowerCase(); // case insensitive feature
+}
+
 function matchRound() {
-    let playerWin = 0;
-    let computerWin = 0;
-    let draw = 0;
+    let playerWin = false;
+    let computerWin = false;
+    let draw = false;
+    let invalidInput = false;
+
+    switch (getPlayerChoice()) {
+        case 'rock':
+            switch (getComputerChoice()) {
+                case 'rock':
+                    draw = true;
+                    console.log("Draw! Player and Computer choosed rock");
+                    break;
+
+                case 'paper':
+                    computerWin = true;
+                    console.log("Computer wins! Player choosed rock and PC choosed paper");
+                    break;
+
+                case 'scissors':
+                    playerWin = true;
+                    console.log("Player wins! Player choosed rock and PC choosed scissors");
+                    break;
+            }
+            break;
+
+        case 'paper':
+            switch (getComputerChoice()) {
+                case 'rock':
+                    playerWin = true;
+                    console.log("Player wins! Player choosed paper and Computer choosed rock");
+                    break;
+
+                case 'paper':
+                    draw = true;
+                    console.log("Draw! Player and Computer choosed paper");
+                    break;
+
+                case 'scissors':
+                    computerWin = true;
+                    console.log("Computer wins! Player choosed paper and PC choosed scissors");
+                    break;
+            }
+            break;
+
+        case 'scissors':
+            switch (getComputerChoice()) {
+                case 'rock':
+                    computerWin = true;
+                    console.log("Computer wins! Player choosed scissors and Computer choosed rock");
+                    break;
+
+                case 'paper':
+                    playerWin = true;
+                    console.log("Player wins! Player choosed scissors and Computer choosed paper");
+                    break;
+
+                case 'scissors':
+                    draw = true;
+                    console.log("Draw! Player and Computer choosed scissors ");
+                    break;
+            }
+            break;
+
+        default:
+            console.log("Not a valid input");
+            invalidInput = true;
+            break;
+    }    
+
+    return [playerWin, computerWin, draw, invalidInput];
+}
+
+function game() {
+
+    let scorePlayer = 0;
+    let scoreComp = 0;
+    let scoreDraw = 0;
 
     for(let i = 0; i < 5; i++) {
-        playerSelection = prompt("Enter your choice");
-        switch (playerSelection) {
-            case 'rock':
-                switch (getComputerChoice()) {
-                    case 'rock':
-                        draw += 1;
-                        console.log("Draw! Player and Computer choosed rock");
-                        break;
+        let result = matchRound();
 
-                    case 'paper':
-                        computerWin += 1;
-                        console.log("Computer wins! Player choosed rock and PC choosed paper");
-                        break;
-
-                    case 'scissors':
-                        playerWin += 1;
-                        console.log("Player wins! Player choosed rock and PC choosed scissors");
-                        break;
-                }
-                break;
-
-            case 'paper':
-                switch (getComputerChoice()) {
-                    case 'rock':
-                        playerWin += 1;
-                        console.log("Player wins! Player choosed paper and Computer choosed rock");
-                        break;
-
-                    case 'paper':
-                        draw += 1;
-                        console.log("Draw! Player and Computer choosed paper");
-                        break;
-
-                    case 'scissors':
-                        computerWin += 1;
-                        console.log("Computer wins! Player choosed paper and PC choosed scissors");
-                        break;
-                }
-                break;
-
-            case 'scissors':
-                switch (getComputerChoice()) {
-                    case 'rock':
-                        computerWin += 1;
-                        console.log("Computer wins! Player choosed scissors and Computer choosed rock");
-                        break;
-
-                    case 'paper':
-                        playerWin += 1;
-                        console.log("Player wins! Player choosed scissors and Computer choosed paper");
-                        break;
-
-                    case 'scissors':
-                        draw += 1;
-                        console.log("Draw! Player and Computer choosed scissors ");
-                        break;
-                }
-                break;
-
-            default:
-                console.log("Not a valid input");
-                i--;
-                break;
-        }    
+        if (result[0]) {scorePlayer += 1;}
+        if (result[1]) {scoreComp += 1;}
+        if (result[2]) {scoreDraw += 1;}
+        if (result[3]) {--i};
     }
 
-    return [playerWin, computerWin, draw];
+    return [scorePlayer, scoreComp, scoreDraw];
 
 }
 
-
-let score = matchRound(prompt("Enter your choice")); 
-
+let score = game();
 console.log(`Final score: \nPlayer's wins => ${score[0]} \nComputer's wins => ${score[1]} \nDraws => ${score[2]}`);
