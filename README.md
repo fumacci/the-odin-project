@@ -8,5 +8,7 @@ This branch contain my ``finished-at-the-learning`` code. That means it will con
 At the moment, I've completed:
 
 - [Landing Page](https://www.theodinproject.com/lessons/foundations-landing-page) 
+- [Rock, paper and scissors](https://www.theodinproject.com/lessons/foundations-rock-paper-scissors)
+
 ``Note: my CSS code at the moment is not pixel-perfect``
 
